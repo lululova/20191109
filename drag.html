@@ -29,6 +29,7 @@
                 function stop(){
                     document.removeEventListener('touchmove',move,false);
                     document.removeEventListener('touched',stop,false);
+                    ev.preventDefault();
                 };
                 document.addEventListener('touchmove',move,false);
                 document.addEventListener('touched',stop,false);
