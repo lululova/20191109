@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html{
+            font-size: 20px;
+        }
+        div{
+            width:5rem;
+            height:5rem;
+            background-color: red;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            var oDiv=document.querySelector('div');
+            var x=oDiv.offsetLeft;
+            var y=oDiv.offsetTop;
+            oDiv.addEventListener('touchstart',function(ev){
+                var disX=ev.targetTouches[0].pageX-x;
+                var disY=ev.targetTouches[0].pageY-y;
+                function move(ev){
+                    x=ev.targetTouches[0].clientX-disX;
+                    y=ev.targetTouches[0].clientY-disY;
+                    oDiv.style.transform='translate('+x+'px,'+y+'px)'
+                };
+                function stop(){
+                    document.removeEventListener('touchmove',move,false);
+                    document.removeEventListener('touched',stop,false);
+                };
+                document.addEventListener('touchmove',move,false);
+                document.addEventListener('touched',stop,false);
+            },false)
+        },false)
+    </script>
+</head>
+<body>
+<div></div>
+</body>
+
+</html>
