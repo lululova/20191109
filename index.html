@@ -3,42 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        html{
-            font-size: 20px;
-        }
-        div{
-            width:5rem;
-            height:5rem;
-            background-color: red;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded',function(){
-            var oDiv=document.querySelector('div');
-            var x=oDiv.offsetLeft;
-            var y=oDiv.offsetTop;
-            oDiv.addEventListener('touchstart',function(ev){
-                var disX=ev.targetTouches[0].pageX-x;
-                var disY=ev.targetTouches[0].pageY-y;
-                function move(ev){
-                    x=ev.targetTouches[0].clientX-disX;
-                    y=ev.targetTouches[0].clientY-disY;
-                    oDiv.style.transform='translate('+x+'px,'+y+'px)'
-                };
-                function stop(){
-                    document.removeEventListener('touchmove',move,false);
-                    document.removeEventListener('touched',stop,false);
-                    ev.preventDefault();
-                };
-                document.addEventListener('touchmove',move,false);
-                document.addEventListener('touched',stop,false);
-            },false)
-        },false)
-    </script>
+    <script src="vue.js"></script>
 </head>
 <body>
-<div></div>
+<div id="box">
+    <input type="text" v-model="msg">
+    <button @click="send">发布</button>
+    <ul>
+        <li v-for="(v,i) in arr">{{v}} <a href="javascript:;" @click="del(i)">删除</a></li>
+    </ul>
+</div>
 </body>
+<script>
+    new Vue({
+        el:'#box',
+        data:{
+            msg:'',
+            arr:[]
+        },
+        methods:{
+            send(){
+                this.arr.unshift(this.msg);
+                console.log(this.arr);
+                this.msg=' ';
+            },
+            del(index){
+                this.arr.splice(index,1)
+            }
+        }
 
+    })
+</script>
 </html>
