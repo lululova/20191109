@@ -29,22 +29,27 @@
             var x=0;
             var y=0;
             oDiv.addEventListener('touchstart',function(ev){
-               
+               var id=ev.targetTouches[0].identifier;
                 var disX=ev.targetTouches[0].pageX-x;
                 var disY=ev.targetTouches[0].pageY-y;
                 function move(ev){
-                    console.log(ev.targetTouches[0].clientX)
-                    x=ev.targetTouches[0].clientX-disX;
-                    y=ev.targetTouches[0].clientY-disY;
-                    oDiv.style.transform='translate('+x+'px,'+y+'px)'
-                };
-                function stop(){
-                    document.removeEventListener('touchmove',move,false);
-                    document.removeEventListener('touched',stop,false);
+                    if(ev.targetTouches[0].identifier==id){
+                        x=ev.targetTouches[0].clientX-disX;
+                        y=ev.targetTouches[0].clientY-disY;
+                        oDiv.style.transform='translate('+x+'px,'+y+'px)'
+                    }
+
 
                 };
+                function stop(){
+                    console.log(ev.changedTouches[0].identifier)
+                    if(ev.changedTouches[0].identifier==id) {
+                        document.removeEventListener('touchmove', move, false);
+                        document.removeEventListener('touchend', stop, false);
+                    }
+                };
                 document.addEventListener('touchmove',move,false);
-                document.addEventListener('touched',stop,false);
+                document.addEventListener('touchend',stop,false);
                 ev.preventDefault();
             },false)
         }
