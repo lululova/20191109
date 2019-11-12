@@ -3,35 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="vue.js"></script>
+    <style>
+        html{
+            font-size: 20px;
+        }
+        div{
+            width:10rem;
+            height:10rem;
+            background-color: red;
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        #d1{
+            width:10rem;
+            height:10rem;
+            background-color: blue;
+            position:absolute;
+            left:300px;
+            top:300px;
+        }
+    </style>
+    <script>
+        function drag(oDiv){
+            var x=0;
+            var y=0;
+            oDiv.addEventListener('touchstart',function(ev){
+               
+                var disX=ev.targetTouches[0].pageX-x;
+                var disY=ev.targetTouches[0].pageY-y;
+                function move(ev){
+                    console.log(ev.targetTouches[0].clientX)
+                    x=ev.targetTouches[0].clientX-disX;
+                    y=ev.targetTouches[0].clientY-disY;
+                    oDiv.style.transform='translate('+x+'px,'+y+'px)'
+                };
+                function stop(){
+                    document.removeEventListener('touchmove',move,false);
+                    document.removeEventListener('touched',stop,false);
+
+                };
+                document.addEventListener('touchmove',move,false);
+                document.addEventListener('touched',stop,false);
+                ev.preventDefault();
+            },false)
+        }
+        document.addEventListener('DOMContentLoaded',function(){
+            var aDiv=document.querySelectorAll('div');
+            for(var i=0;i<aDiv.length;i++){
+                drag(aDiv[i])
+            }
+
+        },false)
+    </script>
 </head>
 <body>
-<div id="box">
-    <input type="text" v-model="msg">
-    <button @click="send">发布</button>
-    <ul>
-        <li v-for="(v,i) in arr">{{v}} <a href="javascript:;" @click="del(i)">删除</a></li>
-    </ul>
-</div>
+<div></div>
+<div id="d1"></div>
 </body>
-<script>
-    new Vue({
-        el:'#box',
-        data:{
-            msg:'',
-            arr:[]
-        },
-        methods:{
-            send(){
-                this.arr.unshift(this.msg);
-                console.log(this.arr);
-                this.msg=' ';
-            },
-            del(index){
-                this.arr.splice(index,1)
-            }
-        }
 
-    })
-</script>
 </html>
