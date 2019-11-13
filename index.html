@@ -7,64 +7,47 @@
         html{
             font-size: 20px;
         }
-        div{
-            width:10rem;
-            height:10rem;
-            background-color: red;
-            position:absolute;
-            left:0;
-            top:0;
+
+        *{
+            margin:0;
+            padding:0;
         }
-        #d1{
+        ul li{
+            list-style: none;
+            float:left;
             width:10rem;
-            height:10rem;
-            background-color: blue;
-            position:absolute;
-            left:300px;
-            top:300px;
+            height:300px;
+
+        }
+        ul{
+            height:300px;
+            width:40rem;
+
+        }
+        li:nth-child(1){
+             background-color: red;
+        }
+        li:nth-child(2){
+            background-color: #ffa3d5;
+        }
+        li:nth-child(3){
+            background-color: #afffd3;
+        }
+        li:nth-child(4){
+            background-color: #0515ff;
         }
     </style>
+
     <script>
-        function drag(oDiv){
-            var x=0;
-            var y=0;
-            oDiv.addEventListener('touchstart',function(ev){
-               var id=ev.targetTouches[0].identifier;
-                var disX=ev.targetTouches[0].pageX-x;
-                var disY=ev.targetTouches[0].pageY-y;
-                function move(ev){
-                    if(ev.targetTouches[0].identifier==id){
-                        x=ev.targetTouches[0].clientX-disX;
-                        y=ev.targetTouches[0].clientY-disY;
-                        oDiv.style.transform='translate('+x+'px,'+y+'px)'
-                    }
-
-
-                };
-                function stop(){
-                    console.log(ev.changedTouches[0].identifier)
-                    if(ev.changedTouches[0].identifier==id) {
-                        document.removeEventListener('touchmove', move, false);
-                        document.removeEventListener('touchend', stop, false);
-                    }
-                };
-                document.addEventListener('touchmove',move,false);
-                document.addEventListener('touchend',stop,false);
-                ev.preventDefault();
-            },false)
-        }
-        document.addEventListener('DOMContentLoaded',function(){
-            var aDiv=document.querySelectorAll('div');
-            for(var i=0;i<aDiv.length;i++){
-                drag(aDiv[i])
-            }
-
-        },false)
+        document.documentElement.style.fontSize=document.documentElement.clientWidth/10+'px'
     </script>
 </head>
 <body>
-<div></div>
-<div id="d1"></div>
+<ul>
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+    <li>444</li>
+</ul>
 </body>
-
 </html>
